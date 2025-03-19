@@ -39,7 +39,54 @@ def gerar_dados_falsos(categoria, num_linhas, num_colunas):
             linha['Tem Airbag?'] = fake.random_element(elements=('Sim', 'Não'))
             linha['Tem ABS?'] = fake.random_element(elements=('Sim', 'Não'))
             linha['Data da Última Revisão'] = fake.date_between(start_date='-5y', end_date='today').strftime('%d/%m/%Y')
-        
+        elif categoria == 'Geográfica':
+            linha['Latitude'] = fake.latitude()
+            linha['Longitude'] = fake.longitude()
+            linha['Cidade'] = fake.city()
+            linha['Estado'] = fake.estado_sigla()
+            linha['País'] = 'Brasil'
+            linha['Temperatura Média (°C)'] = round(random.uniform(10.0, 35.0), 1)
+            linha['Precipitação (mm)'] = round(random.uniform(0.0, 300.0), 1)
+            linha['Umidade Relativa (%)'] = random.randint(30, 90)
+            linha['Velocidade do Vento (km/h)'] = round(random.uniform(0.0, 50.0), 1)
+            linha['Tipo de Clima'] = fake.random_element(elements=('Tropical', 'Temperado', 'Árido'))
+            linha['Risco de Desastres'] = fake.random_element(elements=('Baixo', 'Médio', 'Alto'))
+            linha['Altitude (m)'] = random.randint(0, 3000)
+            linha['Data da Coleta'] = fake.date_between(start_date='-1y', end_date='today').strftime('%d/%m/%Y')
+            linha['Fonte dos Dados'] = fake.random_element(elements=('Satélite', 'Estação Meteorológica'))
+
+        elif categoria == 'Empresarial':
+            linha['Nome da Empresa'] = fake.company()
+            linha['CNPJ'] = fake.cnpj()
+            linha['Setor'] = fake.random_element(elements=('Tecnologia', 'Varejo', 'Saúde', 'Educação'))
+            linha['Faturamento Anual (R$)'] = random.randint(100000, 10000000)
+            linha['Número de Funcionários'] = random.randint(10, 1000)
+            linha['Custo com Pessoal (R$)'] = random.randint(50000, 5000000)
+            linha['Lucro Líquido (R$)'] = random.randint(10000, 1000000)
+            linha['Dívida Total (R$)'] = random.randint(50000, 5000000)
+            linha['Data de Fundação'] = fake.date_between(start_date='-30y', end_date='today').strftime('%d/%m/%Y')
+            linha['Nível de Risco'] = fake.random_element(elements=('Baixo', 'Médio', 'Alto'))
+            linha['Tem Filial no Exterior?'] = fake.random_element(elements=('Sim', 'Não'))
+            linha['Tem Certificação ISO?'] = fake.random_element(elements=('Sim', 'Não'))
+            linha['Nível de Satisfação dos Funcionários (%)'] = random.randint(50, 100)
+            linha['Fonte dos Dados'] = fake.random_element(elements=('Relatório Anual', 'Sistema ERP'))
+
+        elif categoria == 'Mobilidade Elétrica':
+            linha['Modelo do Veículo'] = fake.random_element(elements=('Tesla Model 3', 'Nissan Leaf', 'Chevrolet Bolt'))
+            linha['Autonomia (km)'] = random.randint(200, 600)
+            linha['Tempo de Recarga (horas)'] = round(random.uniform(1.0, 12.0), 1)
+            linha['Potência do Motor (kW)'] = random.randint(100, 500)
+            linha['Tipo de Bateria'] = fake.random_element(elements=('Íon-Lítio', 'Níquel-Metal'))
+            linha['Capacidade da Bateria (kWh)'] = round(random.uniform(30.0, 100.0), 1)
+            linha['Custo do Veículo (R$)'] = random.randint(150000, 500000)
+            linha['Nível de Emissões (g/km)'] = 0.0
+            linha['Tem Recarga Rápida?'] = fake.random_element(elements=('Sim', 'Não'))
+            linha['Número de Estações de Recarga'] = random.randint(100, 10000)
+            linha['Custo Médio de Recarga (R$)'] = round(random.uniform(20.0, 100.0), 1)
+            linha['Data de Fabricação'] = fake.date_between(start_date='-5y', end_date='today').strftime('%d/%m/%Y')
+            linha['Tem Garantia Estendida?'] = fake.random_element(elements=('Sim', 'Não'))
+            linha['Fonte dos Dados'] = fake.random_element(elements=('Fabricante', 'Concessionária'))
+
         elif categoria == 'Imobiliário':
             linha['Endereço do Imóvel'] = fake.address()
             linha['Tipo de Imóvel'] = fake.random_element(elements=('Casa', 'Apartamento', 'Terreno'))
@@ -216,7 +263,7 @@ if st.button('**Gerar Dados**', type="primary"):
     st.markdown("---")
     st.subheader("Dados Gerados")
     dados = gerar_dados_falsos(categoria, num_linhas, num_colunas)
-    st.dataframe(dados.style.highlight_max(axis=0), use_container_width=True)
+    st.dataframe(dados.style, use_container_width=True)
     
     # Opção para baixar os dados como CSV
     st.download_button(

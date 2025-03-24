@@ -1,5 +1,5 @@
 # Ignorar a pasta do ambiente virtual
-venv/
+.venv/
 
 # Ignorar arquivos temporários do Python
 __pycache__/
@@ -9,3 +9,7 @@ __pycache__/
 
 # Ignorar arquivos de configuração do VSCode
 .vscode/
+
+# Ignorar arquivos de teste e configurações
+testes/
+fotos/

@@ -1,0 +1,83 @@
+{
+    "name": "Geográfico",
+    "description": "Dataset de dados geográficos com variáveis climáticas e ambientais. OBS: Todos os dados são falsos e não condizem com a realidade.",
+    "supported_analyses": ["EDA", "Classificacao", "Regressao", "Clusterizacao", "Inferencia"],
+    "columns": [
+      {
+        "name": "Latitude",
+        "data_type": "numeric",
+        "generation": "latitude"
+      },
+      {
+        "name": "Longitude",
+        "data_type": "numeric",
+        "generation": "longitude"
+      },
+      {
+        "name": "Cidade",
+        "data_type": "text",
+        "generation": "cidade"
+      },
+      {
+        "name": "Estado",
+        "data_type": "text",
+        "generation": "estado_sigla"
+      },
+      {
+        "name": "País",
+        "data_type": "text",
+        "fixed_value": "Brasil"
+      },
+      {
+        "name": "Altitude (m)",
+        "data_type": "numeric",
+        "range": [0, 3000]
+      },
+      {
+        "name": "Precipitação (mm)",
+        "data_type": "numeric",
+        "range": [0.0, 300.0]
+      },
+      {
+        "name": "Velocidade do Vento (km/h)",
+        "data_type": "numeric",
+        "range": [0.0, 50.0]
+      },
+      {
+        "name": "Tipo de Clima",
+        "data_type": "categorical",
+        "categories": ["Tropical", "Temperado", "Árido"]
+      },
+      {
+        "name": "Fonte dos Dados",
+        "data_type": "categorical",
+        "categories": ["Satélite", "Estação Meteorológica"]
+      }
+    ],
+    "target_columns": [
+      {
+        "name": "Temperatura Média (°C)",
+        "data_type": "numeric",
+        "generation": {
+          "depends_on": "Altitude (m)",
+          "logic": "if Altitude > 2000 → [10.0, 20.0], else [20.0, 35.0]"
+        },
+        "target_type": "regressao"
+      },
+      {
+        "name": "Umidade Relativa (%)",
+        "data_type": "numeric",
+        "generation": {
+          "depends_on": "Precipitação (mm)",
+          "logic": "if Precipitação > 150 → [70, 90], else [30, 70]"
+        },
+        "target_type": "classificacao"
+      },
+      {
+        "name": "Risco de Desastres",
+        "data_type": "categorical",
+        "categories": ["Baixo", "Médio", "Alto"],
+        "target_type": "classificacao"
+      }
+    ]
+  }
